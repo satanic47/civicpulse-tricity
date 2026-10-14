@@ -49,33 +49,50 @@
 
     <!-- SLIDE 1: COVER -->
     <div class="slide bg-slate-900 rounded-3xl p-8 sm:p-14 border border-slate-800 shadow-2xl relative overflow-hidden">
-      <div class="absolute -top-24 -right-24 w-96 h-96 bg-emerald-500/10 rounded-full blur-3xl"></div>
-      <div class="absolute -bottom-24 -left-24 w-96 h-96 bg-cyan-500/10 rounded-full blur-3xl"></div>
-
-      <div class="flex items-center justify-between text-xs tracking-wider uppercase text-slate-400 font-semibold">
-        <span class="flex items-center gap-2">
-          <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse"></span>
-          Code for Communities Chandigarh • GDG Cloud Chandigarh
-        </span>
-        <span>Google for Developers Supported</span>
+      <!-- 35% TRANSPARENT OPEN HAND WATERMARK (COVER RIGHT) -->
+      <div class="absolute -right-8 -bottom-10 w-96 h-96 pointer-events-none select-none text-white/35 z-0" style="opacity: 0.35;">
+        <svg viewBox="0 0 100 100" class="w-full h-full fill-current" xmlns="http://www.w3.org/2000/svg">
+          <path d="M50 8 C46 16 38 24 30 30 C24 35 18 42 16 50 C14 58 17 65 24 68 C28 70 32 68 35 64 C37 60 38 54 39 48 C41 44 43 42 45 44 C44 50 43 56 43 62 C43 66 45 70 49 71 C53 72 56 69 57 65 C58 58 59 50 61 42 C63 38 66 36 68 39 C67 46 66 53 66 60 C66 64 68 67 72 68 C76 68 78 65 79 61 C81 53 84 45 88 38 C91 32 94 28 92 24 C90 20 85 22 81 26 C75 32 69 40 65 48 C66 38 67 28 68 18 C68 12 65 8 61 8 C57 8 54 12 53 18 C52 24 51 32 50 40 C49 32 50 20 50 8 Z" />
+          <path d="M46 72 L46 92 L38 92 L38 96 L62 96 L62 92 L54 92 L54 72 Z" />
+        </svg>
       </div>
 
-      <div class="my-auto py-10 space-y-6">
-        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-950/80 border border-emerald-800 text-emerald-400 text-xs font-bold">
-          <i class="fa-solid fa-landmark"></i> Digital Public Good for Chandigarh Tricity
+      <div class="absolute -top-24 -left-24 w-96 h-96 bg-cyan-500/10 rounded-full blur-3xl z-0"></div>
+
+      <div class="relative z-10 flex items-center justify-between text-xs tracking-wider uppercase text-slate-400 font-semibold border-b border-slate-800/80 pb-4">
+        <div class="flex items-center gap-3">
+          <!-- Open Hand Emblem -->
+          <div class="w-8 h-8 rounded-lg bg-amber-500/20 border border-amber-500/40 p-1 flex items-center justify-center">
+            <svg viewBox="0 0 100 100" class="w-full h-full text-amber-400" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+              <path d="M50 8 C46 16 38 24 30 30 C24 35 18 42 16 50 C14 58 17 65 24 68 C28 70 32 68 35 64 C37 60 38 54 39 48 C41 44 43 42 45 44 C44 50 43 56 43 62 C43 66 45 70 49 71 C53 72 56 69 57 65 C58 58 59 50 61 42 C63 38 66 36 68 39 C67 46 66 53 66 60 C66 64 68 67 72 68 C76 68 78 65 79 61 C81 53 84 45 88 38 C91 32 94 28 92 24 C90 20 85 22 81 26 C75 32 69 40 65 48 C66 38 67 28 68 18 C68 12 65 8 61 8 C57 8 54 12 53 18 C52 24 51 32 50 40 C49 32 50 20 50 8 Z" />
+              <path d="M46 72 L46 92 L38 92 L38 96 L62 96 L62 92 L54 92 L54 72 Z" />
+            </svg>
+          </div>
+          <div>
+            <span class="text-amber-400 font-bold">Chandigarh Administration</span>
+            <span class="text-slate-500 mx-1.5">•</span>
+            <span>Municipal Corporation Chandigarh</span>
+          </div>
         </div>
-        <h1 class="text-4xl sm:text-6xl font-extrabold tracking-tight font-space leading-tight">
+        <span class="text-emerald-400 font-bold">Google for Developers Supported</span>
+      </div>
+
+      <div class="relative z-10 my-auto py-10 space-y-6">
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-950/80 border border-emerald-800 text-emerald-400 text-xs font-bold">
+          <i class="fa-solid fa-landmark"></i> Digital Public Infrastructure (DPI) • Open Hand Standard
+        </div>
+        <h1 class="text-4xl sm:text-6xl font-extrabold tracking-tight font-space leading-tight text-white">
           CivicPulse Tricity<br/>
           <span class="bg-gradient-to-r from-emerald-400 via-teal-300 to-cyan-400 bg-clip-text text-transparent">
             NagrikSetu AI
           </span>
         </h1>
         <p class="text-lg sm:text-xl text-slate-300 max-w-2xl font-light leading-relaxed">
-          Multilingual Citizen Infrastructure Intelligence Platform aggregating voice, text, and messaging into actionable municipal capital projects across Chandigarh, Mohali, and Panchkula.
+          Multilingual Citizen Infrastructure Intelligence Platform aggregating voice, text, and messaging into actionable municipal capital DPRs across Chandigarh, Mohali, and Panchkula.
         </p>
       </div>
 
-      <div class="flex flex-wrap items-center justify-between pt-8 border-t border-slate-800/80 text-xs text-slate-400">
+      <div class="relative z-10 flex flex-wrap items-center justify-between pt-8 border-t border-slate-800/80 text-xs text-slate-400">
         <div>
           <span class="text-slate-500">Built by:</span> <strong class="text-slate-200">Sudhir Sharma (@satanic47)</strong>
         </div>

@@ -35,35 +35,64 @@
 </head>
 <body class="bg-slate-50 text-slate-800 antialiased min-h-screen flex flex-col">
 
-  <!-- TOP BANNER -->
-  <header class="bg-slate-900 text-white border-b border-slate-800 sticky top-0 z-50 shadow-md">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 py-3 flex flex-wrap items-center justify-between gap-4">
-      <div class="flex items-center space-x-3">
-        <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-emerald-500 to-cyan-500 flex items-center justify-center text-white shadow-lg shadow-emerald-500/20">
-          <i class="fa-solid fa-landmark text-lg"></i>
+  <!-- TRICOLOR TOP STRIP (CHANDIGARH UT / INDIA DPI) -->
+  <div class="h-1.5 w-full bg-gradient-to-r from-amber-500 via-white to-emerald-600"></div>
+
+  <!-- TOP BANNER: CHANDIGARH ADMINISTRATION AESTHETIC -->
+  <header class="bg-[#0b1d33] text-white border-b border-slate-800 sticky top-0 z-50 shadow-lg relative overflow-hidden">
+    
+    <!-- 35% TRANSPARENT OPEN HAND WATERMARK (HEADER RIGHT) -->
+    <div class="absolute -right-6 -bottom-6 w-44 h-44 pointer-events-none select-none text-white/35 z-0" style="opacity: 0.35;">
+      <svg viewBox="0 0 100 100" class="w-full h-full fill-current" xmlns="http://www.w3.org/2000/svg">
+        <!-- Official Le Corbusier Open Hand Monument Silhouette -->
+        <path d="M50 8 C46 16 38 24 30 30 C24 35 18 42 16 50 C14 58 17 65 24 68 C28 70 32 68 35 64 C37 60 38 54 39 48 C41 44 43 42 45 44 C44 50 43 56 43 62 C43 66 45 70 49 71 C53 72 56 69 57 65 C58 58 59 50 61 42 C63 38 66 36 68 39 C67 46 66 53 66 60 C66 64 68 67 72 68 C76 68 78 65 79 61 C81 53 84 45 88 38 C91 32 94 28 92 24 C90 20 85 22 81 26 C75 32 69 40 65 48 C66 38 67 28 68 18 C68 12 65 8 61 8 C57 8 54 12 53 18 C52 24 51 32 50 40 C49 32 50 20 50 8 Z" />
+        <path d="M46 72 L46 92 L38 92 L38 96 L62 96 L62 92 L54 92 L54 72 Z" />
+      </svg>
+    </div>
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 py-3 flex flex-wrap items-center justify-between gap-4 relative z-10">
+      
+      <!-- Logo & Administration Titles -->
+      <div class="flex items-center space-x-3.5">
+        <!-- Open Hand Monument Official Emblem -->
+        <div class="w-12 h-12 rounded-xl bg-gradient-to-b from-amber-500/20 to-slate-900 border border-amber-500/40 flex items-center justify-center p-1.5 shadow-md shadow-amber-500/10">
+          <svg viewBox="0 0 100 100" class="w-full h-full text-amber-400 drop-shadow" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+            <path d="M50 8 C46 16 38 24 30 30 C24 35 18 42 16 50 C14 58 17 65 24 68 C28 70 32 68 35 64 C37 60 38 54 39 48 C41 44 43 42 45 44 C44 50 43 56 43 62 C43 66 45 70 49 71 C53 72 56 69 57 65 C58 58 59 50 61 42 C63 38 66 36 68 39 C67 46 66 53 66 60 C66 64 68 67 72 68 C76 68 78 65 79 61 C81 53 84 45 88 38 C91 32 94 28 92 24 C90 20 85 22 81 26 C75 32 69 40 65 48 C66 38 67 28 68 18 C68 12 65 8 61 8 C57 8 54 12 53 18 C52 24 51 32 50 40 C49 32 50 20 50 8 Z" />
+            <path d="M46 72 L46 92 L38 92 L38 96 L62 96 L62 92 L54 92 L54 72 Z" />
+          </svg>
         </div>
+
         <div>
           <div class="flex items-center gap-2">
-            <span class="text-xl font-extrabold tracking-tight bg-gradient-to-r from-emerald-400 via-teal-300 to-cyan-400 bg-clip-text text-transparent">
-              CivicPulse Tricity
-            </span>
-            <span class="text-xs font-semibold px-2 py-0.5 rounded-full bg-emerald-950 text-emerald-400 border border-emerald-800">
-              NagrikSetu AI
-            </span>
+            <span class="text-[11px] font-bold text-amber-400 tracking-wider uppercase">Chandigarh Administration</span>
+            <span class="text-slate-500">•</span>
+            <span class="text-[10px] text-slate-300 font-gurmukhi font-semibold">ਚੰਡੀਗੜ੍ਹ ਪ੍ਰਸ਼ਾਸਨ</span>
+            <span class="text-slate-500">•</span>
+            <span class="text-[10px] text-slate-300 font-devanagari font-semibold">चंडीगढ़ प्रशासन</span>
           </div>
-          <p class="text-xs text-slate-400">Digital Public Infrastructure Platform for Chandigarh, Mohali & Panchkula</p>
+
+          <div class="flex items-center gap-2 mt-0.5">
+            <h1 class="text-xl sm:text-2xl font-black tracking-tight text-white flex items-center gap-2">
+              <span>CivicPulse Tricity</span>
+              <span class="text-xs font-bold px-2 py-0.5 rounded bg-emerald-950 text-emerald-400 border border-emerald-800">
+                NagrikSetu AI
+              </span>
+            </h1>
+          </div>
+          <p class="text-[11px] text-slate-300 font-medium">Municipal Corporation Chandigarh (MCC) &amp; Smart City Ltd • Digital Public Infrastructure</p>
         </div>
       </div>
 
-      <div class="flex items-center flex-wrap gap-2 sm:gap-3 text-xs">
+      <!-- Action Badges & Metadata -->
+      <div class="flex items-center flex-wrap gap-2 text-xs">
+        <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-950/60 border border-amber-700/60 text-amber-300 font-semibold">
+          <span>🏛️</span> Open Hand DPI Standard
+        </span>
         <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-blue-950/80 border border-blue-800 text-blue-300">
-          <i class="fa-brands fa-google text-blue-400"></i> Google Gemini 1.5 Powered
+          <i class="fa-brands fa-google text-blue-400"></i> Google Gemini 1.5
         </span>
-        <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-purple-950/80 border border-purple-800 text-purple-300">
-          <i class="fa-solid fa-code-branch text-purple-400"></i> Open-Source DPG
-        </span>
-        <a href="https://github.com/satanic47/civicpulse-tricity" target="_blank" class="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 transition">
-          <i class="fa-brands fa-github"></i> GitHub Repo
+        <a href="https://github.com/satanic47/civicpulse-tricity" target="_blank" class="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 transition">
+          <i class="fa-brands fa-github"></i> GitHub
         </a>
       </div>
     </div>
@@ -365,17 +394,43 @@
 
   </main>
 
-  <!-- FOOTER -->
-  <footer class="bg-white border-t border-slate-200 py-6 text-xs text-slate-500">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 flex flex-wrap items-center justify-between gap-4">
-      <div>
-        <p class="font-semibold text-slate-700">CivicPulse Tricity — NagrikSetu AI</p>
-        <p>Submitted for <span class="font-bold text-slate-800">Code for Communities Chandigarh</span> (GDG Cloud Chandigarh & Google for Developers)</p>
+  <!-- FOOTER: CHANDIGARH ADMINISTRATION DPI FOOTER -->
+  <footer class="bg-slate-900 text-slate-400 border-t border-slate-800 py-8 text-xs relative overflow-hidden">
+    
+    <!-- 35% TRANSPARENT OPEN HAND WATERMARK (FOOTER LEFT) -->
+    <div class="absolute -left-6 -bottom-8 w-44 h-44 pointer-events-none select-none text-white/35 z-0" style="opacity: 0.35;">
+      <svg viewBox="0 0 100 100" class="w-full h-full fill-current" xmlns="http://www.w3.org/2000/svg">
+        <path d="M50 8 C46 16 38 24 30 30 C24 35 18 42 16 50 C14 58 17 65 24 68 C28 70 32 68 35 64 C37 60 38 54 39 48 C41 44 43 42 45 44 C44 50 43 56 43 62 C43 66 45 70 49 71 C53 72 56 69 57 65 C58 58 59 50 61 42 C63 38 66 36 68 39 C67 46 66 53 66 60 C66 64 68 67 72 68 C76 68 78 65 79 61 C81 53 84 45 88 38 C91 32 94 28 92 24 C90 20 85 22 81 26 C75 32 69 40 65 48 C66 38 67 28 68 18 C68 12 65 8 61 8 C57 8 54 12 53 18 C52 24 51 32 50 40 C49 32 50 20 50 8 Z" />
+        <path d="M46 72 L46 92 L38 92 L38 96 L62 96 L62 92 L54 92 L54 72 Z" />
+      </svg>
+    </div>
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 relative z-10 space-y-4">
+      <div class="flex flex-wrap items-center justify-between gap-4 pb-4 border-b border-slate-800">
+        <div>
+          <div class="flex items-center gap-2">
+            <span class="text-amber-400 font-bold uppercase tracking-wider text-[11px]">Chandigarh Administration</span>
+            <span class="text-slate-600">•</span>
+            <span class="text-slate-200 font-semibold">Municipal Corporation Chandigarh</span>
+          </div>
+          <p class="text-[11px] text-slate-400 mt-1">
+            New Deluxe Building, Sector 17, Chandigarh, UT 160017 | Citizen Toll-Free Helpline: <strong class="text-emerald-400">155304</strong> | Smart City ICCC Cell
+          </p>
+        </div>
+
+        <div class="flex items-center gap-3">
+          <span class="px-2.5 py-1 rounded bg-slate-800 text-slate-300 border border-slate-700">Open-Source DPG</span>
+          <a href="https://github.com/satanic47/civicpulse-tricity" target="_blank" class="px-3 py-1 rounded bg-emerald-600 hover:bg-emerald-500 text-white font-bold transition flex items-center gap-1.5">
+            <i class="fa-brands fa-github"></i> Repository
+          </a>
+        </div>
       </div>
-      <div class="flex items-center gap-4">
-        <span>Built by <strong class="text-slate-800">Sudhir Sharma (@satanic47)</strong></span>
-        <span>•</span>
-        <a href="https://github.com/satanic47/civicpulse-tricity" target="_blank" class="text-emerald-600 hover:underline">GitHub</a>
+
+      <div class="flex flex-wrap items-center justify-between gap-2 text-[11px] text-slate-500">
+        <p>
+          Submitted for <strong class="text-slate-300">Code for Communities Chandigarh</strong> (GDG Cloud Chandigarh &amp; Google for Developers). Built by <strong class="text-slate-200">Sudhir Sharma (@satanic47)</strong>.
+        </p>
+        <p>© 2026 Chandigarh Digital Public Goods Initiative. Le Corbusier Open Hand Heritage Standard.</p>
       </div>
     </div>
   </footer>
