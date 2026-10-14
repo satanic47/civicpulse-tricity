@@ -58,6 +58,14 @@ async def serve_home(request: Request):
         }
     )
 
+@app.get("/presentation", response_class=HTMLResponse)
+async def serve_presentation():
+    presentation_file = os.path.join(os.path.dirname(__file__), "..", "presentation", "index.html")
+    if os.path.exists(presentation_file):
+        with open(presentation_file, "r", encoding="utf-8") as f:
+            return f.read()
+    raise HTTPException(status_code=404, detail="Presentation deck not found")
+
 @app.get("/api/v1/grievances")
 async def list_grievances(sector: Optional[str] = None, category: Optional[str] = None, channel: Optional[str] = None):
     return store.get_all(sector=sector, category=category, channel=channel)
