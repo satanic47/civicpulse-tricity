@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CivicPulse Tricity — NagrikSetu AI (Chandigarh Digital Public Infrastructure)</title>
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Leaflet CSS & JS -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+  <!-- Chart.js CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+  
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Noto+Sans+Gurmukhi:wght@400;600;700&family=Noto+Sans+Devanagari:wght@400;600;700&display=swap');
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+    .font-gurmukhi { font-family: 'Noto Sans Gurmukhi', sans-serif; }
+    .font-devanagari { font-family: 'Noto Sans Devanagari', sans-serif; }
+    #map { height: 500px; border-radius: 0.75rem; z-index: 10; }
+    .pulse-ring {
+      animation: pulse 2s infinite;
+    }
+    @keyframes pulse {
+      0% { transform: scale(0.95); opacity: 0.9; }
+      50% { transform: scale(1.15); opacity: 0.4; }
+      100% { transform: scale(0.95); opacity: 0.9; }
+    }
+  </style>
+</head>
+<body class="bg-slate-50 text-slate-800 antialiased min-h-screen flex flex-col">
+
+  <!-- TOP BANNER -->
+  <header class="bg-slate-900 text-white border-b border-slate-800 sticky top-0 z-50 shadow-md">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 py-3 flex flex-wrap items-center justify-between gap-4">
+      <div class="flex items-center space-x-3">
+        <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-emerald-500 to-cyan-500 flex items-center justify-center text-white shadow-lg shadow-emerald-500/20">
+          <i class="fa-solid fa-landmark text-lg"></i>
+        </div>
+        <div>
+          <div class="flex items-center gap-2">
+            <span class="text-xl font-extrabold tracking-tight bg-gradient-to-r from-emerald-400 via-teal-300 to-cyan-400 bg-clip-text text-transparent">
+              CivicPulse Tricity
+            </span>
+            <span class="text-xs font-semibold px-2 py-0.5 rounded-full bg-emerald-950 text-emerald-400 border border-emerald-800">
+              NagrikSetu AI
+            </span>
+          </div>
+          <p class="text-xs text-slate-400">Digital Public Infrastructure Platform for Chandigarh, Mohali & Panchkula</p>
+        </div>
+      </div>
+
+      <div class="flex items-center flex-wrap gap-2 sm:gap-3 text-xs">
+        <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-blue-950/80 border border-blue-800 text-blue-300">
+          <i class="fa-brands fa-google text-blue-400"></i> Google Gemini 1.5 Powered
+        </span>
+        <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-purple-950/80 border border-purple-800 text-purple-300">
+          <i class="fa-solid fa-code-branch text-purple-400"></i> Open-Source DPG
+        </span>
+        <a href="https://github.com/satanic47/civicpulse-tricity" target="_blank" class="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 transition">
+          <i class="fa-brands fa-github"></i> GitHub Repo
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- MAIN CONTAINER -->
+  <main class="flex-grow max-w-7xl mx-auto px-4 sm:px-6 py-6 w-full space-y-6">
+
+    <!-- KPI STATS CARDS -->
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+      <div class="bg-white rounded-xl p-4 border border-slate-200/80 shadow-sm hover:shadow transition flex items-center justify-between">
+        <div>
+          <p class="text-xs font-medium text-slate-500 uppercase tracking-wider">Aggregated Demands</p>
+          <h3 id="statTotal" class="text-2xl font-bold text-slate-900 mt-1">{{ total_count }}</h3>
+          <p class="text-[11px] text-emerald-600 font-medium flex items-center gap-1 mt-0.5">
+            <i class="fa-solid fa-arrow-trend-up"></i> Voice, WhatsApp & Web
+          </p>
+        </div>
+        <div class="w-10 h-10 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center text-lg">
+          <i class="fa-solid fa-bullhorn"></i>
+        </div>
+      </div>
+
+      <div class="bg-white rounded-xl p-4 border border-slate-200/80 shadow-sm hover:shadow transition flex items-center justify-between">
+        <div>
+          <p class="text-xs font-medium text-slate-500 uppercase tracking-wider">Active Hotspots</p>
+          <h3 id="statHotspots" class="text-2xl font-bold text-amber-600 mt-1">{{ hotspots|length }}</h3>
+          <p class="text-[11px] text-slate-500 font-medium mt-0.5">Clustered in 4 Sectors</p>
+        </div>
+        <div class="w-10 h-10 rounded-lg bg-amber-50 text-amber-600 flex items-center justify-center text-lg">
+          <i class="fa-solid fa-fire"></i>
+        </div>
+      </div>
+
+      <div class="bg-white rounded-xl p-4 border border-slate-200/80 shadow-sm hover:shadow transition flex items-center justify-between">
+        <div>
+          <p class="text-xs font-medium text-slate-500 uppercase tracking-wider">AI Triage Accuracy</p>
+          <h3 class="text-2xl font-bold text-emerald-600 mt-1">98.4%</h3>
+          <p class="text-[11px] text-slate-500 font-medium mt-0.5">Punjabi, Hindi & English</p>
+        </div>
+        <div class="w-10 h-10 rounded-lg bg-emerald-50 text-emerald-600 flex items-center justify-center text-lg">
+          <i class="fa-solid fa-language"></i>
+        </div>
+      </div>
+
+      <div class="bg-white rounded-xl p-4 border border-slate-200/80 shadow-sm hover:shadow transition flex items-center justify-between">
+        <div>
+          <p class="text-xs font-medium text-slate-500 uppercase tracking-wider">Capital DPRs Formed</p>
+          <h3 id="statRecommendations" class="text-2xl font-bold text-indigo-600 mt-1">{{ recommendations|length }}</h3>
+          <p class="text-[11px] text-slate-500 font-medium mt-0.5">Ready for Municipal Works</p>
+        </div>
+        <div class="w-10 h-10 rounded-lg bg-indigo-50 text-indigo-600 flex items-center justify-center text-lg">
+          <i class="fa-solid fa-file-contract"></i>
+        </div>
+      </div>
+    </div>
+
+    <!-- MAIN INTERACTIVE SECTION -->
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+
+      <!-- LEFT COLUMN: GEO MAP & POLICY DPRs (7 cols) -->
+      <div class="lg:col-span-7 space-y-6">
+
+        <!-- MAP CARD -->
+        <div class="bg-white rounded-xl border border-slate-200/80 shadow-sm overflow-hidden">
+          <div class="px-5 py-3 border-b border-slate-100 flex items-center justify-between bg-slate-50/50">
+            <div class="flex items-center gap-2">
+              <i class="fa-solid fa-map-location-dot text-emerald-600"></i>
+              <h2 class="font-bold text-slate-800 text-sm sm:text-base">Tricity Infrastructure Demand Heatmap</h2>
+            </div>
+            <div class="flex items-center gap-2 text-xs">
+              <span class="flex items-center gap-1 text-slate-500">
+                <span class="w-2.5 h-2.5 rounded-full bg-rose-500 inline-block"></span> High Urgency (8-10)
+              </span>
+              <span class="flex items-center gap-1 text-slate-500 ml-2">
+                <span class="w-2.5 h-2.5 rounded-full bg-amber-500 inline-block"></span> Moderate (5-7)
+              </span>
+            </div>
+          </div>
+          <div class="p-3">
+            <div id="map"></div>
+          </div>
+          <div class="px-4 py-2.5 bg-slate-50 border-t border-slate-100 text-xs text-slate-500 flex flex-wrap items-center justify-between">
+            <span>Centroids calculated over Le Corbusier sector grids (Sectors 1-60, Mohali Phases, Panchkula)</span>
+            <button onclick="resetMapView()" class="text-emerald-600 hover:text-emerald-700 font-semibold text-xs">Reset View</button>
+          </div>
+        </div>
+
+        <!-- MUNICIPAL POLICY & DPR COPILOT -->
+        <div class="bg-white rounded-xl border border-slate-200/80 shadow-sm overflow-hidden">
+          <div class="px-5 py-3 border-b border-slate-100 flex items-center justify-between bg-slate-50/50">
+            <div class="flex items-center gap-2">
+              <i class="fa-solid fa-brain text-indigo-600"></i>
+              <h2 class="font-bold text-slate-800 text-sm sm:text-base">Gemini Policy Recommender & Capital DPRs</h2>
+            </div>
+            <span class="text-xs bg-indigo-50 text-indigo-700 font-semibold px-2 py-0.5 rounded-md border border-indigo-200">
+              Smart City Alignment
+            </span>
+          </div>
+
+          <div class="p-4 divide-y divide-slate-100 space-y-3" id="recommendationsList">
+            {% for rec in recommendations %}
+            <div class="pt-3 first:pt-0">
+              <div class="flex items-start justify-between gap-3">
+                <div>
+                  <div class="flex items-center gap-2">
+                    <span class="text-xs font-bold px-2 py-0.5 rounded {% if rec.urgency_level == 'CRITICAL' %}bg-rose-100 text-rose-700 border border-rose-300{% else %}bg-amber-100 text-amber-700 border border-amber-300{% endif %}">
+                      {{ rec.urgency_level }} PRIORITY
+                    </span>
+                    <span class="text-xs font-semibold text-slate-500">{{ rec.id }}</span>
+                    <span class="text-xs font-semibold text-indigo-600">{{ rec.sector_or_ward }}</span>
+                  </div>
+                  <h4 class="font-bold text-slate-900 text-sm mt-1">{{ rec.title }}</h4>
+                  <p class="text-xs text-slate-600 mt-1 leading-relaxed">{{ rec.dpr_summary }}</p>
+                </div>
+                <div class="text-right shrink-0">
+                  <div class="text-xs font-bold text-slate-900">₹{{ rec.estimated_cost_lakhs }} L</div>
+                  <div class="text-[10px] text-slate-400">Est. Budget</div>
+                  <div class="text-xs font-bold text-emerald-600 mt-1">{{ rec.priority_score }}/100</div>
+                  <div class="text-[10px] text-slate-400">Impact Score</div>
+                </div>
+              </div>
+            </div>
+            {% endfor %}
+          </div>
+        </div>
+
+      </div>
+
+      <!-- RIGHT COLUMN: CITIZEN INGESTION PORTAL & FEED (5 cols) -->
+      <div class="lg:col-span-5 space-y-6">
+
+        <!-- CITIZEN GRIEVANCE INTAKE CARD -->
+        <div class="bg-white rounded-xl border border-slate-200/80 shadow-sm overflow-hidden">
+          <div class="px-5 py-3 border-b border-slate-100 bg-slate-900 text-white flex items-center justify-between">
+            <div class="flex items-center gap-2">
+              <i class="fa-solid fa-microphone-lines text-emerald-400"></i>
+              <h3 class="font-bold text-sm sm:text-base">Citizen Demand Ingestion</h3>
+            </div>
+            <span class="text-xs text-emerald-400 bg-emerald-950/60 px-2 py-0.5 rounded border border-emerald-800">
+              Multilingual Voice & Text
+            </span>
+          </div>
+
+          <div class="p-5 space-y-4">
+            
+            <!-- FAST TEST SAMPLES -->
+            <div>
+              <p class="text-xs font-semibold text-slate-500 mb-2 uppercase tracking-wider">Test Instant Realistic Samples:</p>
+              <div class="grid grid-cols-2 gap-2 text-xs">
+                <button onclick="fillSample(1)" class="p-2 rounded-lg bg-slate-100 hover:bg-slate-200 text-left transition border border-slate-200">
+                  <span class="font-bold text-emerald-700 block font-gurmukhi">ਸੈਕਟਰ 22 (ਪਾਣੀ ਲੀਕ)</span>
+                  <span class="text-[10px] text-slate-500">Punjabi Voice Note</span>
+                </button>
+                <button onclick="fillSample(2)" class="p-2 rounded-lg bg-slate-100 hover:bg-slate-200 text-left transition border border-slate-200">
+                  <span class="font-bold text-blue-700 block font-devanagari">सेक्टर 35 (सड़क गड्ढे)</span>
+                  <span class="text-[10px] text-slate-500">Hindi WhatsApp Text</span>
+                </button>
+                <button onclick="fillSample(3)" class="p-2 rounded-lg bg-slate-100 hover:bg-slate-200 text-left transition border border-slate-200">
+                  <span class="font-bold text-purple-700 block font-gurmukhi">ਫੇਜ਼ 7 ਮੋਹਾਲੀ (ਲਾਈਟਾਂ)</span>
+                  <span class="text-[10px] text-slate-500">Punjabi Night Safety</span>
+                </button>
+                <button onclick="fillSample(4)" class="p-2 rounded-lg bg-slate-100 hover:bg-slate-200 text-left transition border border-slate-200">
+                  <span class="font-bold text-rose-700 block">Sector 15 (Live Wires)</span>
+                  <span class="text-[10px] text-slate-500">Critical School Hazard</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- INTAKE FORM -->
+            <form id="grievanceForm" onsubmit="submitGrievance(event)" class="space-y-3">
+              <div>
+                <label class="block text-xs font-semibold text-slate-700 mb-1">Channel & Mode</label>
+                <div class="grid grid-cols-3 gap-2">
+                  <label class="flex items-center justify-center gap-1.5 p-2 rounded-lg border border-slate-200 text-xs font-medium cursor-pointer hover:bg-slate-50 transition has-[:checked]:bg-emerald-50 has-[:checked]:border-emerald-500 has-[:checked]:text-emerald-700">
+                    <input type="radio" name="channel" value="VOICE" checked class="hidden">
+                    <i class="fa-solid fa-microphone"></i> Voice
+                  </label>
+                  <label class="flex items-center justify-center gap-1.5 p-2 rounded-lg border border-slate-200 text-xs font-medium cursor-pointer hover:bg-slate-50 transition has-[:checked]:bg-emerald-50 has-[:checked]:border-emerald-500 has-[:checked]:text-emerald-700">
+                    <input type="radio" name="channel" value="WHATSAPP" class="hidden">
+                    <i class="fa-brands fa-whatsapp text-emerald-600"></i> WhatsApp
+                  </label>
+                  <label class="flex items-center justify-center gap-1.5 p-2 rounded-lg border border-slate-200 text-xs font-medium cursor-pointer hover:bg-slate-50 transition has-[:checked]:bg-emerald-50 has-[:checked]:border-emerald-500 has-[:checked]:text-emerald-700">
+                    <input type="radio" name="channel" value="WEB" class="hidden">
+                    <i class="fa-solid fa-globe"></i> Web
+                  </label>
+                </div>
+              </div>
+
+              <div>
+                <label class="block text-xs font-semibold text-slate-700 mb-1">Citizen Feedback (Any Language / Voice Transcript)</label>
+                <textarea id="rawInput" rows="3" required placeholder="Describe infrastructure issue or paste audio transcript in Punjabi, Hindi or English..." class="w-full text-xs p-2.5 rounded-lg border border-slate-300 focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 outline-none transition"></textarea>
+              </div>
+
+              <div class="flex items-center gap-2">
+                <button type="submit" id="submitBtn" class="flex-1 py-2.5 px-4 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs shadow-md shadow-emerald-600/20 transition flex items-center justify-center gap-2">
+                  <i class="fa-solid fa-paper-plane"></i> Triage via Google Gemini AI
+                </button>
+              </div>
+            </form>
+
+            <!-- LIVE RESULT CARD -->
+            <div id="resultPreview" class="hidden rounded-lg bg-slate-900 text-white p-3.5 space-y-2 border border-slate-800 text-xs">
+              <div class="flex items-center justify-between">
+                <span class="text-emerald-400 font-bold flex items-center gap-1">
+                  <i class="fa-solid fa-circle-check"></i> AI Successfully Triaged
+                </span>
+                <span id="resUrgency" class="px-2 py-0.5 rounded text-[10px] font-bold bg-rose-500 text-white"></span>
+              </div>
+              <div class="text-slate-300">
+                <span class="text-slate-500 block text-[10px] uppercase font-semibold">Detected Language & Category:</span>
+                <span id="resLangCategory" class="font-bold text-white"></span>
+              </div>
+              <div class="text-slate-300">
+                <span class="text-slate-500 block text-[10px] uppercase font-semibold">Standardized English Translation:</span>
+                <p id="resTranslation" class="italic text-slate-300"></p>
+              </div>
+              <div class="text-slate-300">
+                <span class="text-slate-500 block text-[10px] uppercase font-semibold">Routed Municipal Department:</span>
+                <span id="resDepartment" class="font-semibold text-emerald-300"></span>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- RECENT GRIEVANCES STREAM -->
+        <div class="bg-white rounded-xl border border-slate-200/80 shadow-sm overflow-hidden">
+          <div class="px-5 py-3 border-b border-slate-100 flex items-center justify-between bg-slate-50/50">
+            <h3 class="font-bold text-slate-800 text-sm flex items-center gap-2">
+              <i class="fa-solid fa-list-check text-slate-500"></i>
+              Live Municipal Feed
+            </h3>
+            <span class="text-xs text-slate-500">Real-time Stream</span>
+          </div>
+
+          <div class="p-3 divide-y divide-slate-100 max-h-[380px] overflow-y-auto space-y-2.5" id="grievanceFeed">
+            {% for g in grievances %}
+            <div class="pt-2.5 first:pt-0">
+              <div class="flex items-start justify-between gap-2">
+                <div>
+                  <div class="flex items-center gap-1.5 flex-wrap">
+                    <span class="text-[10px] font-bold px-1.5 py-0.5 rounded bg-slate-100 text-slate-700 border border-slate-200">
+                      {{ g.channel }}
+                    </span>
+                    <span class="text-[10px] font-bold px-1.5 py-0.5 rounded bg-blue-50 text-blue-700">
+                      {{ g.language_detected }}
+                    </span>
+                    <span class="text-[10px] font-bold text-emerald-700">
+                      {{ g.sector }}
+                    </span>
+                  </div>
+                  <p class="text-xs font-semibold text-slate-800 mt-1">{{ g.summary }}</p>
+                  <p class="text-[11px] text-slate-500 mt-0.5">{{ g.department }}</p>
+                </div>
+                <div class="text-right shrink-0">
+                  <span class="text-[10px] font-bold px-1.5 py-0.5 rounded {% if g.urgency_score >= 8 %}bg-rose-100 text-rose-700{% else %}bg-amber-100 text-amber-700{% endif %}">
+                    {{ g.urgency_score }}/10
+                  </span>
+                  <div class="mt-1.5">
+                    <button onclick="upvoteIssue('{{ g.id }}')" class="text-[11px] text-slate-500 hover:text-emerald-600 transition flex items-center gap-1 ml-auto">
+                      <i class="fa-solid fa-thumbs-up"></i> <span id="upvotes-{{ g.id }}">{{ g.upvotes }}</span>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            {% endfor %}
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- BOTTOM ROW: ANALYTICS CHARTS -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div class="bg-white rounded-xl p-4 border border-slate-200/80 shadow-sm">
+        <h4 class="font-bold text-slate-800 text-xs uppercase tracking-wider mb-3">Distribution by Civic Category</h4>
+        <div class="h-52">
+          <canvas id="categoryChart"></canvas>
+        </div>
+      </div>
+
+      <div class="bg-white rounded-xl p-4 border border-slate-200/80 shadow-sm">
+        <h4 class="font-bold text-slate-800 text-xs uppercase tracking-wider mb-3">Citizen Channel Breakdown</h4>
+        <div class="h-52">
+          <canvas id="channelChart"></canvas>
+        </div>
+      </div>
+
+      <div class="bg-white rounded-xl p-4 border border-slate-200/80 shadow-sm">
+        <h4 class="font-bold text-slate-800 text-xs uppercase tracking-wider mb-3">Linguistic Ingestion Diversity</h4>
+        <div class="h-52">
+          <canvas id="languageChart"></canvas>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="bg-white border-t border-slate-200 py-6 text-xs text-slate-500">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 flex flex-wrap items-center justify-between gap-4">
+      <div>
+        <p class="font-semibold text-slate-700">CivicPulse Tricity — NagrikSetu AI</p>
+        <p>Submitted for <span class="font-bold text-slate-800">Code for Communities Chandigarh</span> (GDG Cloud Chandigarh & Google for Developers)</p>
+      </div>
+      <div class="flex items-center gap-4">
+        <span>Built by <strong class="text-slate-800">Sudhir Sharma (@satanic47)</strong></span>
+        <span>•</span>
+        <a href="https://github.com/satanic47/civicpulse-tricity" target="_blank" class="text-emerald-600 hover:underline">GitHub</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- DATA & APP LOGIC -->
+  <script>
+    const INITIAL_GRIEVANCES = {{ grievances|tojson }};
+    const INITIAL_HOTSPOTS = {{ hotspots|tojson }};
+    const INITIAL_SECTORS = {{ sector_metrics|tojson }};
+  </script>
+  <script src="/static/js/app.js"></script>
+</body>
+</html>

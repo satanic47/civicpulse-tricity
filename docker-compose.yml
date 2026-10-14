@@ -1,0 +1,16 @@
+version: '3.8'
+
+services:
+  civicpulse-app:
+    build: .
+    container_name: civicpulse_tricity
+    ports:
+      - "8000:8000"
+    environment:
+      - GEMINI_API_KEY=${GEMINI_API_KEY:-}
+      - APP_NAME=NagrikSetu AI - CivicPulse Tricity
+      - PORT=8000
+    volumes:
+      - ./app/data:/app/app/data
+      - ./uploads:/app/uploads
+    restart: unless-stopped
