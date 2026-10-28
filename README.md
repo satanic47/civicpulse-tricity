@@ -4,13 +4,13 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-emerald.svg)](LICENSE)
 [![Python: 3.10+](https://img.shields.io/badge/Python-3.10%2B-blue.svg)](https://www.python.org/)
 [![FastAPI](https://img.shields.io/badge/FastAPI-0.110%2B-009688.svg)](https://fastapi.tiangolo.com/)
-[![Google Gemini 1.5](https://img.shields.io/badge/Google%20AI-Gemini%201.5-4285F4.svg)](https://ai.google.dev/)
-[![Tests: 21 Passing](https://img.shields.io/badge/Tests-21%2F21%20Passing-brightgreen.svg)]()
+[![Google Gemini 1.5](https://img.shields.io/badge/Google%20AI-Gemma%204%20%7C%20Gemini-4285F4.svg)](https://ai.google.dev/)
+[![Tests: 22 Passing](https://img.shields.io/badge/Tests-22%2F22%20Passing-brightgreen.svg)]()
 [![Docker](https://img.shields.io/badge/Docker-Ready-2496ED.svg)](Dockerfile)
 
-> **Official Submission for [Code for Communities – Chandigarh Edition](https://hackculture.io/hackathons/code-for-communities-chandigarh)**  
-> Organized by **GDG Cloud Chandigarh** & Supported by **Google for Developers**  
-> *Category:* AI for Digital Public Infrastructure of Chandigarh | *Bonus Track:* Best Open-Source AI Project  
+> **Official Submission for [Hacktoberfest Hack Day X GDG Cloud Chandigarh](https://www.mlh.com/events/hacktoberfest-hack-day-chandigarh-x-gdg-cloud-chandigarh)**  
+> Supported by **Major League Hacking (MLH)** & **Google for Developers**  
+> *Categories:* **Best Use of Gemma 4** | **Best Open-Source AI Project**  
 > *Author:* Sudhir Sharma ([@satanic47](https://github.com/satanic47))
 
 ---
