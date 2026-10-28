@@ -40,6 +40,25 @@ templates = Jinja2Templates(directory=templates_dir)
 class StatusUpdate(BaseModel):
     status: str
 
+@app.get("/health")
+@app.get("/api/v1/health")
+async def health_check():
+    total_records = len(store.get_all())
+    return {
+        "status": "healthy",
+        "service": "CivicPulse Tricity — NagrikSetu AI",
+        "version": "1.0.0",
+        "database": {
+            "status": "connected",
+            "active_records": total_records
+        },
+        "ai_engine": {
+            "status": "ready",
+            "models": ["Gemma 4", "Gemini 1.5 Flash"],
+            "multilingual_support": ["Punjabi", "Hindi", "English"]
+        }
+    }
+
 @app.get("/", response_class=HTMLResponse)
 async def serve_home(request: Request):
     grievances = store.get_all()
